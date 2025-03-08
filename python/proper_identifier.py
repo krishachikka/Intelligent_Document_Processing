@@ -28,24 +28,15 @@ def detect_and_verify_code(image_bytes, document_data):
     if codes:
         for code in codes:
             code_data = code.data.decode('utf-8')
-            code_type = code.type  # Type will be 'QRCODE', 'EAN13', etc.
+            code_type = code.type  # Type will be 'QRCODE' or 'EAN13', etc.
             
             # Compare the scanned code with the document data
             for document in document_data:
                 if code_data == document['barcode']:
-                    return {
-                        'document_id': document['document_id'],
-                        'status': 'Verified',
-                        'code_data': code_data,
-                        'code_type': code_type
-                    }
+                    return {'document_id': document['document_id'], 'status': 'Verified', 'code_data': code_data, 'code_type': code_type}
             
             # If no matching document found, return the code data anyway
-            return {
-                'status': 'No matching document',
-                'code_data': code_data,
-                'code_type': code_type
-            }
+            return {'status': 'No matching document', 'code_data': code_data, 'code_type': code_type}
     
     return {'status': 'No code found'}
 
