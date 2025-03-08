@@ -128,19 +128,42 @@ const Dashboard = () => {
       {/* File Upload Section */}
       <div className="bg-white p-6 shadow-md rounded-lg mt-6">
         <h3 className="text-lg font-semibold mb-4">Upload Document for Verification</h3>
-        <input
-          type="file"
-          onChange={handleFileUpload}
-          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-          className="block w-full text-sm text-gray-600 border border-gray-300 rounded-lg cursor-pointer"
-        />
+
+        {/* File Upload Area */}
+        <div className="flex items-center justify-center border-2 border-dashed border-gray-300 p-8 rounded-lg hover:bg-gray-50 transition-colors">
+          <input
+            type="file"
+            onChange={handleFileUpload}
+            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+            className="absolute opacity-0 cursor-pointer"
+          />
+          <div className="text-center text-gray-500 space-y-4">
+            <p className="text-lg">Drag and drop a file here, or click to select one.</p>
+            <p className="text-sm">Accepted formats: PDF, DOC, DOCX, JPG, JPEG, PNG</p>
+          </div>
+        </div>
+
+        {/* Show File Details */}
         {selectedFile && (
-          <div className="mt-4 flex">
-            <div className="w-1/4 p-4 border border-gray-300 rounded-lg mr-4">
-              <p className="text-sm text-gray-800">Selected File: {selectedFile.name}</p>
-              <img src={URL.createObjectURL(selectedFile)} alt="Selected File" className="mt-2 w-full h-auto" />
+          <div className="mt-6 flex space-x-6">
+            {/* File Preview */}
+            <div className="w-1/4 p-4 border border-gray-300 rounded-lg flex justify-center items-center bg-gray-50">
+              {selectedFile.type.includes("image") ? (
+                <img
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Selected File"
+                  className="w-full h-auto object-contain"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center text-gray-600">
+                  <p className="text-sm">{selectedFile.name}</p>
+                  <p className="text-xs text-gray-400">{(selectedFile.size / 1024).toFixed(2)} KB</p>
+                </div>
+              )}
             </div>
-            <div className="w-3/4 p-4 border border-gray-300 rounded-lg">
+
+            {/* Document Information */}
+            <div className="w-3/4 p-4 border border-gray-300 rounded-lg space-y-4">
               {docInfo ? (
                 <>
                   <p><strong>Format:</strong> {docInfo.format}</p>
@@ -160,11 +183,15 @@ const Dashboard = () => {
       <div className="bg-white p-6 shadow-md rounded-lg mt-6 text-center">
         <button
           onClick={handleTrainModel}
-          className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600"
+          disabled={!selectedFile}  // Disable button if no file is uploaded
+          className={`${
+            !selectedFile ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+          } text-white px-6 py-3 rounded-lg shadow-lg`}
         >
-          Train Model
+          {selectedFile ? "Train Model" : "Upload a file to train the model"}  {/* Change text based on file upload */}
         </button>
       </div>
+
 
       {/* Modal for "Train Model" */}
       {isModalOpen && (

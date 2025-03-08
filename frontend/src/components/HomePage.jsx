@@ -4,14 +4,13 @@ import Dashboard from './Dashboard';
 
 function HomePage() {
   return (
-    <div>
-      <h1>IDP Dashboard</h1>
+    <div className="p-4">
       <Dashboard />
       
       {/* Button to navigate to AcceptanceRejection page */}
-      <div style={{ marginTop: '20px' }}>
+      <div className="mt-5">
         <Link to="/acceptance-rejection">
-          <button style={{ padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white' }}>
+          <button className="px-6 py-2 bg-blue-950 text-white rounded hover:bg-blue-800">
             Go to Acceptance and Rejection
           </button>
         </Link>

@@ -4,6 +4,7 @@ const AcceptanceRejection = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openUser, setOpenUser] = useState(null);
+  const [editMode, setEditMode] = useState(null);  // Track edit mode for document status
 
   useEffect(() => {
     fetch('/data/dummyData.json') // Fetching the dummy data from public folder
@@ -46,79 +47,84 @@ const AcceptanceRejection = () => {
     }
   };
 
+  const toggleEditMode = (docId) => {
+    setEditMode(editMode === docId ? null : docId);  // Toggle between showing "Modify" and "Accept/Reject" buttons
+  };
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-blue-800">Loading...</div>;
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Acceptance and Rejection of Documents</h2>
+    <div className="p-6 bg-gray-50 h-full">
+      <h2 className="text-3xl font-semibold text-blue-800 mb-6">Acceptance and Rejection of Documents</h2>
 
       {/* User Details Table */}
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <table className="w-full table-auto border-collapse text-left">
         <thead>
           <tr>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Name</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Email</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Phone</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd' }}>Documents</th>
+            <th className="p-2 border border-blue-200 text-blue-800">Name</th>
+            <th className="p-2 border border-blue-200 text-blue-800">Email</th>
+            <th className="p-2 border border-blue-200 text-blue-800">Phone</th>
+            <th className="p-2 border border-blue-200 text-blue-800">Documents</th>
           </tr>
         </thead>
         <tbody>
           {data.map((user) => (
-            <tr key={user.id}>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{user.user}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{user.email}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{user.phone}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+            <tr key={user.id} className="hover:bg-blue-100">
+              <td className="p-2 border border-blue-200">{user.user}</td>
+              <td className="p-2 border border-blue-200">{user.email}</td>
+              <td className="p-2 border border-blue-200">{user.phone}</td>
+              <td className="p-2 border border-blue-200">
                 <button
                   onClick={() => toggleUserDocuments(user.id)}
-                  style={{ padding: '5px 10px', backgroundColor: '#4CAF50', color: 'white' }}
+                  className="px-4 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-700"
                 >
                   {openUser === user.id ? 'Hide Documents' : 'Show Documents'}
                 </button>
 
                 <div
-                  style={{
-                    maxHeight: openUser === user.id ? '500px' : '0',
-                    overflow: 'hidden',
-                    opacity: openUser === user.id ? '1' : '0',
-                    transition: 'max-height 0.5s ease, opacity 0.5s ease',
-                    marginTop: '10px'
-                  }}
+                  className={`transition-all duration-500 ease-in-out mt-4 overflow-hidden ${
+                    openUser === user.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}
                 >
                   {user.documents.map((doc) => (
-                    <div key={doc.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                      <div style={{ flex: 1, paddingRight: '10px' }}>
-                        <p><strong>{doc.type}</strong></p>
-                        <button onClick={() => handleDocumentPreview(doc.file)} style={{ padding: '5px 10px', backgroundColor: '#4CAF50', color: 'white' }}>
+                    <div key={doc.id} className="flex items-center mb-4">
+                      <div className="flex-1 pr-4">
+                        <p className="font-semibold text-blue-800">{doc.type}</p>
+                        <button
+                          onClick={() => handleDocumentPreview(doc.file)}
+                          className="px-4 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-700"
+                        >
                           View Document
                         </button>
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <p>Status: {doc.status}</p>
-                        <div>
-                          <button
-                            onClick={() => handleDocumentStatusChange(user.id, doc.id, 'Accepted')}
-                            style={{
-                              marginRight: '10px',
-                              padding: '5px 10px',
-                              backgroundColor: 'green',
-                              color: 'white'
-                            }}
-                          >
-                            Accept
-                          </button>
-                          <button
-                            onClick={() => handleDocumentStatusChange(user.id, doc.id, 'Rejected')}
-                            style={{
-                              padding: '5px 10px',
-                              backgroundColor: 'red',
-                              color: 'white'
-                            }}
-                          >
-                            Reject
-                          </button>
+                      <div className="flex-1">
+                        <p className="text-blue-800">Status: {doc.status}</p>
+                        <div className="mt-2 flex space-x-4">
+                          {editMode === doc.id ? (
+                            <>
+                              <button
+                                onClick={() => handleDocumentStatusChange(user.id, doc.id, 'Accepted')}
+                                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-400"
+                              >
+                                Accept
+                              </button>
+                              <button
+                                onClick={() => handleDocumentStatusChange(user.id, doc.id, 'Rejected')}
+                                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-400"
+                              >
+                                Reject
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              onClick={() => toggleEditMode(doc.id)}
+                              className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-400 transition-all duration-500 ease-in-out"
+                            >
+                              Modify
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>

@@ -14,7 +14,7 @@
       {
         "id": 2,
         "type": "PAN Card",
-        "status": "Pending",
+        "status": "Rejected",
         "file": "/files/pan-card.pdf"
       },
       {
@@ -40,7 +40,7 @@
       {
         "id": 5,
         "type": "Aadhaar Card",
-        "status": "Pending",
+        "status": "Rejected",
         "file": "/images/aadhaar-card.jpg"
       },
       {
@@ -52,7 +52,7 @@
       {
         "id": 7,
         "type": "Bank Statement",
-        "status": "Ongoing",
+        "status": "Rejected",
         "file": "/images/bank-statement.jpg"
       }
     ]
@@ -78,13 +78,13 @@
       {
         "id": 10,
         "type": "Bank Statement",
-        "status": "Pending",
+        "status": "Rejected",
         "file": "/images/bank-statement.jpg"
       },
       {
         "id": 11,
         "type": "ITR",
-        "status": "Ongoing",
+        "status": "Rejected",
         "file": "/files/itr.pdf"
       }
     ]
@@ -98,7 +98,7 @@
       {
         "id": 12,
         "type": "Aadhaar Card",
-        "status": "Completed",
+        "status": "Accepted",
         "file": "/images/aadhaar-card.jpg"
       },
       {
@@ -110,7 +110,7 @@
       {
         "id": 14,
         "type": "Bank Statement",
-        "status": "Pending",
+        "status": "Rejected",
         "file": "/images/bank-statement.jpg"
       }
     ]
@@ -124,7 +124,7 @@
       {
         "id": 15,
         "type": "Aadhaar Card",
-        "status": "Pending",
+        "status": "Rejected",
         "file": "/images/aadhaar-card.jpg"
       },
       {
@@ -142,7 +142,7 @@
       {
         "id": 18,
         "type": "ITR",
-        "status": "Ongoing",
+        "status": "Rejected",
         "file": "/files/itr.pdf"
       }
     ]
