@@ -1,6 +1,14 @@
 import json
+from flask import Flask, request, jsonify
 from pyzbar.pyzbar import decode
-from PIL import Image, ImageDraw
+from PIL import Image
+import io
+from flask_cors import CORS  # Import CORS
+
+app = Flask(__name__)
+
+# Enable CORS for the entire app
+CORS(app, origins=["http://localhost:5173"])
 
 # Function to load document data from JSON file
 def load_document_data(json_path):
@@ -8,10 +16,10 @@ def load_document_data(json_path):
         data = json.load(file)
     return data['documents']
 
-# Function to detect and display barcode and match with the document details
-def detect_and_display_barcode(image_path, document_data):
-    # Open the image
-    img = Image.open(image_path)
+# Function to detect and verify barcode from the image
+def detect_and_verify_barcode(image_bytes, document_data):
+    # Open the image from bytes
+    img = Image.open(io.BytesIO(image_bytes))
     
     # Decode the barcode(s)
     barcodes = decode(img)
@@ -19,29 +27,36 @@ def detect_and_display_barcode(image_path, document_data):
     # Check if any barcodes were found
     if barcodes:
         for barcode in barcodes:
-            # Get barcode data and type
             barcode_data = barcode.data.decode('utf-8')
-            barcode_type = barcode.type
-            
-            # Print barcode info
-            print(f"Detected Barcode: {barcode_data}, Type: {barcode_type}")
             
             # Compare the scanned barcode with the document data
             for document in document_data:
                 if barcode_data == document['barcode']:
-                    # If the barcode matches, print "Verified"
-                    print(f"Document ID: {document['document_id']} - Verified")
-                    return  # Exit after the match
-            # If no match found, do nothing (leave)
-    else:
-        print("No barcode found in the image.")
+                    return {'document_id': document['document_id'], 'status': 'Verified', 'barcode_data': barcode_data}
+            
+            # If no matching document found, return the barcode data anyway
+            return {'status': 'No matching document', 'barcode_data': barcode_data}
+    
+    return {'status': 'No barcode found'}
 
-# Example usage
-image_path = 'images/receipt.png'  # Provide the path to your image
-json_path = 'documents.json'  # Provide the path to the JSON file with documents
+@app.route('/verify-barcode', methods=['POST'])
+def verify_barcode():
+    # Get the image from the request
+    image_file = request.files.get('image')
+    
+    if not image_file:
+        return jsonify({'error': 'Image file is required'}), 400
 
-# Load document data from JSON file
-document_data = load_document_data(json_path)
+    # Load document data from the JSON file
+    document_data = load_document_data('documents.json')  # Load the document data here from the local JSON file
+    
+    # Get image bytes
+    image_bytes = image_file.read()
+    
+    # Perform barcode verification
+    result = detect_and_verify_barcode(image_bytes, document_data)
+    
+    return jsonify(result)
 
-# Call the function to detect barcode and match with document data
-detect_and_display_barcode(image_path, document_data)
+if __name__ == '__main__':
+    app.run(debug=True)
