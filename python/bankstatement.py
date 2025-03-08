@@ -68,7 +68,7 @@ def process_image(image_path):
     cv2.imwrite(output_path, image)
 
     return detected_tables, output_path
-
+ 
 @app.route('/outputs/<filename>', methods=['GET'])
 def serve_output_image(filename):
     # Serve the result image from the outputs folder
