@@ -24,18 +24,19 @@ def detect_and_verify_barcode(image_bytes, document_data):
     # Decode the barcode(s)
     barcodes = decode(img)
     
-    # Check if any barcodes were found
-    if barcodes:
-        for barcode in barcodes:
-            barcode_data = barcode.data.decode('utf-8')
+    # Check if any barcodes/QR codes were found
+    if codes:
+        for code in codes:
+            code_data = code.data.decode('utf-8')
+            code_type = code.type  # Type will be 'QRCODE' or 'EAN13', etc.
             
             # Compare the scanned barcode with the document data
             for document in document_data:
-                if barcode_data == document['barcode']:
-                    return {'document_id': document['document_id'], 'status': 'Verified', 'barcode_data': barcode_data}
+                if code_data == document['barcode']:
+                    return {'document_id': document['document_id'], 'status': 'Verified', 'code_data': code_data, 'code_type': code_type}
             
-            # If no matching document found, return the barcode data anyway
-            return {'status': 'No matching document', 'barcode_data': barcode_data}
+            # If no matching document found, return the code data anyway
+            return {'status': 'No matching document', 'code_data': code_data, 'code_type': code_type}
     
     return {'status': 'No barcode found'}
 

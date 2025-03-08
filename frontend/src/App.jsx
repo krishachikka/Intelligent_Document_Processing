@@ -6,6 +6,7 @@ import Home from './components/Home'
 import DocumentTextExtractor from './pages/DocumentTextExtractor'
 import AcceptanceRejection from './components/AcceptanceRejection'
 import HomePage from './components/HomePage'
+import BankStatement from './components/BankStatement'
 
 
 
@@ -18,10 +19,11 @@ function App() {
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
 
-          <Route path='/extract-text' element={<DocumentTextExtractor/>}/>
+          <Route path='/extract-text' element={<DocumentTextExtractor />} />
 
-          <Route path='/homepage' element={<HomePage/>} />
+          <Route path='/homepage' element={<HomePage />} />
           <Route path="/acceptance-rejection" element={<AcceptanceRejection />} />
+          <Route path="/bank-statement" element={<BankStatement />} />
 
         </Routes>
       </BrowserRouter>
