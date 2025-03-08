@@ -16,31 +16,41 @@ def load_document_data(json_path):
         data = json.load(file)
     return data['documents']
 
-# Function to detect and verify barcode from the image
-def detect_and_verify_barcode(image_bytes, document_data):
+# Function to detect and verify barcode/QR code from the image
+def detect_and_verify_code(image_bytes, document_data):
     # Open the image from bytes
     img = Image.open(io.BytesIO(image_bytes))
     
-    # Decode the barcode(s)
-    barcodes = decode(img)
+    # Decode the barcode(s) or QR code(s)
+    codes = decode(img)
     
-    # Check if any barcodes were found
-    if barcodes:
-        for barcode in barcodes:
-            barcode_data = barcode.data.decode('utf-8')
+    # Check if any barcodes/QR codes were found
+    if codes:
+        for code in codes:
+            code_data = code.data.decode('utf-8')
+            code_type = code.type  # Type will be 'QRCODE', 'EAN13', etc.
             
-            # Compare the scanned barcode with the document data
+            # Compare the scanned code with the document data
             for document in document_data:
-                if barcode_data == document['barcode']:
-                    return {'document_id': document['document_id'], 'status': 'Verified', 'barcode_data': barcode_data}
+                if code_data == document['barcode']:
+                    return {
+                        'document_id': document['document_id'],
+                        'status': 'Verified',
+                        'code_data': code_data,
+                        'code_type': code_type
+                    }
             
-            # If no matching document found, return the barcode data anyway
-            return {'status': 'No matching document', 'barcode_data': barcode_data}
+            # If no matching document found, return the code data anyway
+            return {
+                'status': 'No matching document',
+                'code_data': code_data,
+                'code_type': code_type
+            }
     
-    return {'status': 'No barcode found'}
+    return {'status': 'No code found'}
 
-@app.route('/verify-barcode', methods=['POST'])
-def verify_barcode():
+@app.route('/verify-code', methods=['POST'])
+def verify_code():
     # Get the image from the request
     image_file = request.files.get('image')
     
@@ -53,8 +63,8 @@ def verify_barcode():
     # Get image bytes
     image_bytes = image_file.read()
     
-    # Perform barcode verification
-    result = detect_and_verify_barcode(image_bytes, document_data)
+    # Perform code verification
+    result = detect_and_verify_code(image_bytes, document_data)
     
     return jsonify(result)
 
