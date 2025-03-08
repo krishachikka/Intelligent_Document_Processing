@@ -6,14 +6,15 @@ import Home from './components/Home'
 import DocumentTextExtractor from './pages/DocumentTextExtractor'
 import AcceptanceRejection from './components/AcceptanceRejection'
 import HomePage from './components/HomePage'
+import Header from './components/Header'
 import BankStatement from './components/BankStatement'
-
-
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <Header />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path='/signin' element={<Signin />} />

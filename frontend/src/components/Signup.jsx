@@ -47,9 +47,9 @@ function Signup() {
     };
 
     return (
-        <div className="min-h-screen bg-green-50 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h1 className="text-3xl font-bold text-green-700 mb-6">Sign Up</h1>
+                <h1 className="text-3xl font-bold text-blue-900 mb-6">Sign Up</h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                     <label htmlFor="username" className="sr-only">Username</label>
@@ -59,7 +59,7 @@ function Signup() {
                         id="username"
                         onChange={handleChange}
                         value={formData.username}
-                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <label htmlFor="email" className="sr-only">Email</label>
                     <input
@@ -68,7 +68,7 @@ function Signup() {
                         id="email"
                         onChange={handleChange}
                         value={formData.email}
-                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <label htmlFor="password" className="sr-only">Password</label>
                     <input
@@ -77,16 +77,16 @@ function Signup() {
                         id="password"
                         onChange={handleChange}
                         value={formData.password}
-                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <button
                         type="submit"
-                        className="bg-green-600 text-white p-3 rounded-lg shadow hover:bg-green-700 transition duration-300"
+                        className="bg-blue-900 text-white p-3 rounded-lg shadow hover:bg-blue-900 transition duration-300"
                     >
                         Sign Up
                     </button>
                 </form>
-                <p className="mt-10 text-center">Already have an account? <Link to="/signin" className="text-green-600 hover:underline">Sign in</Link></p>
+                <p className="mt-10 text-center">Already have an account? <Link to="/signin" className="text-blue-600 hover:underline">Sign in</Link></p>
             </div>
         </div>
     );

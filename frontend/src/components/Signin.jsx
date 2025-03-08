@@ -51,9 +51,9 @@ function Signin() {
 
 
     return (
-        <div className="min-h-screen bg-purple-50 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h1 className="text-3xl font-bold text-purple-700 mb-6">Sign in</h1>
+                <h1 className="text-3xl font-bold text-blue-900 mb-6">Sign in</h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                     <label htmlFor="email" className="sr-only">Email</label>
@@ -63,7 +63,7 @@ function Signin() {
                         id="email"
                         onChange={handleChange}
                         value={formData.email}
-                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <label htmlFor="password" className="sr-only">Password</label>
                     <input
@@ -72,16 +72,16 @@ function Signin() {
                         id="password"
                         onChange={handleChange}
                         value={formData.password}
-                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <button
                         type="submit"
-                        className="bg-purple-600 text-white p-3 rounded-lg shadow hover:bg-purple-700 transition duration-300"
+                        className="bg-blue-900 text-white p-3 rounded-lg shadow hover:bg-blue-700 transition duration-300"
                     >
                         Sign in
                     </button>
                 </form>
-                <p className="mt-10">Don't have an account? <Link to="/signup" className="text-purple-600 hover:underline">Sign up</Link></p>
+                <p className="mt-10">Don't have an account? <Link to="/signup" className="text-blue-600 hover:underline">Sign up</Link></p>
             </div>
         </div>
     );
