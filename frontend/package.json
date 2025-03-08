@@ -16,7 +16,7 @@
     "axios": "^1.7.6",
     "chart.js": "^4.4.8",
     "mammoth": "^1.9.0",
-    "pdfjs-dist": "^4.10.38",
+    "pdfjs-dist": "^2.10.377",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.3.1",
