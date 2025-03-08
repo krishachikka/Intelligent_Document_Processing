@@ -6,12 +6,13 @@ const userRouter = require('./routes/user.route'); // Ensure this path is correc
 
 dotenv.config({ path: '.env.local' });
 
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Use cors middleware
 app.use(cors({
-    origin: 'http://localhost:5176', // Replace with the frontend URL
+    origin: 'http://localhost:5178', // Replace with the frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true // If you need to support cookies or authentication
 }));

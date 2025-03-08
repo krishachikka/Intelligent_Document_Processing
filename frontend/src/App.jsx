@@ -4,7 +4,8 @@ import Signin from './components/Signin'
 import Signup from './components/Signup'
 import Home from './components/Home'
 import DocumentTextExtractor from './pages/DocumentTextExtractor'
-// import DetectImageUpload from './components/DetectImageUpload'
+import AcceptanceRejection from './components/AcceptanceRejection'
+import HomePage from './components/HomePage'
 
 
 
@@ -16,12 +17,16 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
+
           <Route path='/extract-text' element={<DocumentTextExtractor/>}/>
-          {/* <Route path='/detect-image' element={<DetectImageUpload/>}/> */}
+
+          <Route path='/homepage' element={<HomePage/>} />
+          <Route path="/acceptance-rejection" element={<AcceptanceRejection />} />
+
         </Routes>
       </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
