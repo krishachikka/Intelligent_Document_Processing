@@ -1,21 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import SignUp from './components/SignUp';
-import Login from './components/Login';
-import Home from './components/Home';
+import DocumentTextExtractor from './pages/DocumentTextExtractor';
+// import PdfExtractor from './pages/PdfExtractor';
 
-function App() {
+
+const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="App">
+      <header className="App-header">
+        <h1>Document Text Extractor</h1>
+        <p>Upload a PDF or Word document to extract text</p>
+      </header>
+
+      {/* The DocumentTextExtractor component for file upload and text extraction */}
+    <DocumentTextExtractor/>
+    {/* <PdfExtractor/> */}
+    </div>
   );
-}
+};
 
 export default App;

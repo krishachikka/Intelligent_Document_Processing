@@ -39,3 +39,8 @@ This project is licensed under the [MIT License](LICENSE), allowing you to use, 
 
 Thank you for exploring our React authentication website repository! We look forward to seeing how you customize and deploy this solution for your applications.
 
+
+
+
+
+Packages : npm install tesseract.js pdfjs-dist mammoth
