@@ -14,22 +14,16 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.7",
     "axios": "^1.7.6",
-
+    "chart.js": "^4.4.8",
     "mammoth": "^1.9.0",
     "pdfjs-dist": "^4.10.38",
-
-    "chart.js": "^4.4.8",
-
     "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.3.1",
-
-    "react-router-dom": "^6.26.1",
-    "tesseract.js": "^6.0.0",
-
+    "react-icons": "^5.5.0",
     "react-router-dom": "^6.30.0",
-    "recharts": "^2.15.1"
-
+    "recharts": "^2.15.1",
+    "tesseract.js": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
