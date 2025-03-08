@@ -1,10 +1,10 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Signin from './components/Signin'
-import Signup from './components/Signup'
-import Home from './components/Home'
-
-
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
+import Home from './components/Home';
+import HomePage from './components/HomePage';
+import AcceptanceRejection from './components/AcceptanceRejection'; // New component
 
 function App() {
   return (
@@ -14,10 +14,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/homepage' element={<HomePage />} />
+          <Route path="/acceptance-rejection" element={<AcceptanceRejection />} />
         </Routes>
       </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
