@@ -6,13 +6,12 @@ const userRouter = require('./routes/user.route'); // Ensure this path is correc
 
 dotenv.config({ path: '.env.local' });
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Use cors middleware
 app.use(cors({
-    origin: 'http://localhost:5173', // Replace with the frontend URL
+    origin: 'http://localhost:5176', // Replace with the frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true // If you need to support cookies or authentication
 }));
@@ -25,5 +24,5 @@ mongoose.connect(process.env.MONGO_URL)
     .catch((err) => console.log("Error in connecting Mongoose:", err));
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);  // Correct the string format
 });

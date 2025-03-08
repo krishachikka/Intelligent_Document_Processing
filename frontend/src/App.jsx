@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Signin from './components/Signin'
 import Signup from './components/Signup'
 import Home from './components/Home'
+import DocumentTextExtractor from './pages/DocumentTextExtractor'
+// import DetectImageUpload from './components/DetectImageUpload'
 
 
 
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/extract-text' element={<DocumentTextExtractor/>}/>
+          {/* <Route path='/detect-image' element={<DetectImageUpload/>}/> */}
         </Routes>
       </BrowserRouter>
     </>
