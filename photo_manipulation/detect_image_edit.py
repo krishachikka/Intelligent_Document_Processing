@@ -49,7 +49,7 @@ def error_level_analysis(image_path):
         print(f"❌ Error performing ELA: {e}")
 
 if __name__ == "__main__":
-    image_path = "aadharcard.jpg"  # Change this to your image file path
+    image_path = "1.jpg"  # Change this to your image file path
 
     print("\n🔍 Running EXIF Metadata Analysis...")
     check_exif(image_path)
