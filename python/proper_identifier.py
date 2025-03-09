@@ -1,63 +1,45 @@
-import json
-from flask import Flask, request, jsonify
+import cv2
+import numpy as np
 from pyzbar.pyzbar import decode
-from PIL import Image
-import io
-from flask_cors import CORS  # Import CORS
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173"])  # Enable CORS for frontend at localhost:5173
 
-# Enable CORS for the entire app
-CORS(app, origins=["http://localhost:5173"])
-
-# Function to load document data from JSON file
-def load_document_data(json_path):
-    with open(json_path, 'r') as file:
-        data = json.load(file)
-    return data['documents']
-
-# Function to detect and verify barcode from the image
 def detect_and_verify_barcode(image_bytes, document_data):
-    # Open the image from bytes
-    img = Image.open(io.BytesIO(image_bytes))
+    # Convert image bytes to a numpy array for OpenCV
+    nparr = np.frombuffer(image_bytes, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     
-    # Decode the barcode(s)
-    barcodes = decode(img)
+    # Use pyzbar to decode barcode data
+    barcodes = decode(img)  # Decode barcodes (including QR codes)
     
-    # Check if any barcodes/QR codes were found
-    if codes:
-        for code in codes:
-            code_data = code.data.decode('utf-8')
-            code_type = code.type  # Type will be 'QRCODE' or 'EAN13', etc.
-            
-            # Compare the scanned barcode with the document data
-            for document in document_data:
-                if code_data == document['barcode']:
-                    return {'document_id': document['document_id'], 'status': 'Verified', 'code_data': code_data, 'code_type': code_type}
-            
-            # If no matching document found, return the code data anyway
-            return {'status': 'No matching document', 'code_data': code_data, 'code_type': code_type}
-    
-    return {'status': 'No barcode found'}
+    if barcodes:
+        barcode_data = [barcode.data.decode('utf-8') for barcode in barcodes]  # Get barcode data as a list of strings
+        return {'barcode_data': barcode_data, 'status': 'success'}
+    else:
+        return {'error': 'No barcode detected', 'status': 'failure'}
 
-@app.route('/verify-barcode', methods=['POST'])
+@app.route('/verify-code', methods=['POST'])  # Ensure the route matches the frontend request
 def verify_barcode():
-    # Get the image from the request
-    image_file = request.files.get('image')
-    
-    if not image_file:
-        return jsonify({'error': 'Image file is required'}), 400
+    try:
+        # Retrieve the image file from the request
+        image = request.files['image']
+        image_bytes = image.read()  # Read image as bytes
+        
+        # You can add any additional document data here if needed
+        document_data = {}
 
-    # Load document data from the JSON file
-    document_data = load_document_data('documents.json')  # Load the document data here from the local JSON file
-    
-    # Get image bytes
-    image_bytes = image_file.read()
-    
-    # Perform barcode verification
-    result = detect_and_verify_barcode(image_bytes, document_data)
-    
-    return jsonify(result)
+        # Call the barcode detection function
+        result = detect_and_verify_barcode(image_bytes, document_data)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        # Return the result as JSON
+        return jsonify(result)
+
+    except Exception as e:
+        # Return error message in case of exception
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=5000)  # Ensure it runs on all network interfaces and port 5000
