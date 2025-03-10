@@ -99,5 +99,4 @@ cd Intelligent_Document_Processing
 ## 📞 Contact
 
 For queries or issues, reach out at:  
-📧 **support@yourdomain.com**  
-🔗 **https://yourwebsite.com**
+📧 **yashchavan4628@gmail.com** 
